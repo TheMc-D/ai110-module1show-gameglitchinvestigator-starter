@@ -8,22 +8,30 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 - List at least two concrete bugs you noticed at the start  
   (for example: "the hints were backwards").
 
+  A new game cannot be started so you have to refresh/restart the page
+  The hint give the opposite of what you are supposed to input
+  
+
 **Bug Reproduction Log**
 
 Document at least 3 bugs you found. Add rows as needed.
 
 | Input | Expected Behavior | Actual Behavior | Console Output / Error |
 |-------|-------------------|-----------------|------------------------|
-| | | | |
-| | | | |
-| | | | |
+|   50  |    go higher      |   go lower      |       none             |
+|   70  |    go higher      |   go lower      |       none             |
+|   90  |    go lower       |   go higher     |       none             | 
 
 ---
 
 ## 2. How did you use AI as a teammate?
 
 - Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)?
+claude code
+
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
+
+
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
 
 ---
