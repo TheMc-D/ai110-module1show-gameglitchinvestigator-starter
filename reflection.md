@@ -11,6 +11,7 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
   A new game cannot be started so you have to refresh/restart the page
   The hint give the opposite of what you are supposed to input
   On every even-numbered attempt the secret number is secretly converted to a string, so the game compares a number to text — this causes the directional hints to be wrong on those turns and can prevent the game from detecting a correct answer properly
+  when you start a new game it still shows the you already won message
 
 **Bug Reproduction Log**
 
@@ -22,6 +23,10 @@ Document at least 3 bugs you found. Add rows as needed.
 |   70  |    go higher      |   go lower      |       none             |
 |   90  |    go lower       |   go higher     |       none             |
 | correct number (attempt 2) | win | wrong hint or no win detected | none — string vs int comparison fails silently |
+| Click New Game after win | Fresh game starts | "You already won" blocks play | none — status not reset |
+| Select Easy, click New Game | Secret from 1–20 | Secret from 1–100 | none — hardcoded range |
+| Fresh load, before any guess | Show 8 attempts left | Shows 7 (off by one) | none — initial attempts=1 |
+| Switch to Hard difficulty | Range 1–100 | Range 1–50 (smaller than Normal) | none |
 
 ---
 
