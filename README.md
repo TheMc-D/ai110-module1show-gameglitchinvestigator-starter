@@ -25,19 +25,37 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
-- [ ] Detail which bugs you found.
-- [ ] Explain what fixes you applied.
+- [x] Describe the game's purpose.
+- [x] Detail which bugs you found.
+- [x] Explain what fixes you applied.
+
+The game asks the player to guess a secret number within a limited number of attempts. Each guess gets a hint (Too High / Too Low) to guide the next guess. Difficulty controls the number range and attempt limit.
+
+**Bugs found:**
+- Hints were backwards (Too High said "Go Higher", Too Low said "Go Lower")
+- On even-numbered attempts the secret was cast to a string, breaking comparison
+- New Game button did not reset status, score, or history — game stayed locked after win/loss
+- New Game ignored difficulty and always picked from 1–100
+- Attempts display was off by one (initialized to 1 instead of 0)
+- Hard difficulty had a smaller range (1–50) than Normal (1–100)
+
+**Fixes applied:**
+- Swapped the Go HIGHER/LOWER messages in check_guess
+- Removed the even-attempt string conversion
+- New Game now resets status, score, history, and uses the correct difficulty range
+- Attempts initialized to 0; display updated via st.empty() placeholder after submit
+- Corrected difficulty ranges: Easy 1–20, Normal 1–50, Hard 1–100
+- Refactored all logic into logic_utils.py; app.py imports from it
 
 ## 📸 Demo Walkthrough
 
 Describe your fixed game in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. Run the app with `python -m streamlit run app.py` and select a difficulty from the sidebar.
+2. Open the "Developer Debug Info" expander to see the secret number and attempt count.
+3. Type a guess in the text box and click "Submit Guess" — a hint tells you to go Higher or Lower.
+4. Keep guessing using the hints until you match the secret number exactly to win.
+5. Click "New Game" to reset the score, history, and secret — the game is immediately playable again.
 
 **Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
 

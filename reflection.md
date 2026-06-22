@@ -37,8 +37,11 @@ claude code
 
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
 
+Claude correctly identified that the even-attempt string conversion bug was causing hints to break on every second guess. It explained that when `st.session_state.attempts % 2 == 0`, the secret was cast to a string, making a numeric comparison impossible. I verified this by testing: after removing those lines, guesses on even attempts returned correct hints and wins were properly detected.
 
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
+
+Claude suggested changing the Hard difficulty range to 1–200 to make it genuinely harder than Normal's 1–100. That was the wrong direction — the intended design was Easy: 1–20, Normal: 1–50, Hard: 1–100. I caught it because I knew what the ranges should be, and corrected the suggestion before it was applied.
 
 ---
 
@@ -49,11 +52,15 @@ claude code
   and what it showed you about your code.
 - Did AI help you design or understand any tests? How?
 
+I decided a bug was fixed by manually playing the game after each change and checking that the behavior matched what was expected — for example, submitting a number lower than the secret and confirming "Go HIGHER" appeared. For the refactor, I ran `python -m pytest tests/` and all 3 tests passed, confirming that `check_guess` returned the correct outcome strings. The tests showed that returning a tuple instead of a plain string would have caused failures, which is exactly why the function signature had to change during the refactor. Claude explained why `python -m pytest` works when `pytest` alone fails — it adds the project root to the Python path so `logic_utils` can be imported.
+
 ---
 
 ## 4. What did you learn about Streamlit and state?
 
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+
+Every time you click a button or type something in Streamlit, the entire Python script reruns from top to bottom — like refreshing a webpage but for your code. That means any regular variable you created gets wiped and reset. `st.session_state` is like a notebook that survives those reruns — anything you store in it stays put between clicks. I also learned that because the script runs top to bottom, the order of your code matters: a display that renders before a button handler runs will show stale data unless you use a placeholder like `st.empty()` and update it after the logic runs.
 
 ---
 
@@ -63,3 +70,6 @@ claude code
   - This could be a testing habit, a prompting strategy, or a way you used Git.
 - What is one thing you would do differently next time you work with AI on a coding task?
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+
+One habit I want to keep is asking AI to show me the change before applying it. Several times in this project I caught issues — like the wrong difficulty range — because I reviewed the suggestion first instead of just accepting it. Next time I work with AI on a coding task I would test each fix immediately in the running app rather than batching multiple changes before testing, so it's easier to trace which fix caused a new problem. This project showed me that AI-generated code can look completely reasonable and still have multiple subtle bugs — I can't trust it just because it runs without errors.
+
